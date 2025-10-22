@@ -1,0 +1,11 @@
+- Evaluate the trained model on a separate validation set
+- Compute and report metrics such as accuracy, precision, recall, and F1-score
+- restructure code
+- improving model
+- create readme
+
+# optional
+- implement transferlearing
+- deploy model
+  - Build an app using Flask 
+  - User should be able to upload one or multiples images get predictions including probabilities for each prediction
