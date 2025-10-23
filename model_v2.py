@@ -60,14 +60,14 @@ def create_model(num_classes, train_dataset):
 
     base_learning_rate = 0.0001
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
-                                                    loss=tf.keras.losses.BinaryCrossentropy(),
-                                                    metrics=[tf.keras.metrics.BinaryAccuracy(threshold=0.5, name='accuracy')])
+                                                    loss=tf.keras.losses.CategoricalCrossentropy(),
+                                                    metrics=['accuracy']) 
 
 
     
     return model
 
-def train_model(train_dataset, test_dataset, epochs=30):
+def model_v2_build(train_dataset, test_dataset, epochs=30):
 
     torch.cuda.empty_cache()
 
