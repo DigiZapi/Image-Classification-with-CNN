@@ -34,7 +34,7 @@ def init_data_augmentation(input_shape=(32, 32, 3)):
 
     return model;
 
-def matheus_model(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
+def data_augmentation(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     model = init_data_augmentation(input_shape)
     batch_size = 128
     num_classes = 6
