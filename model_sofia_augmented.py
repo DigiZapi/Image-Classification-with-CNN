@@ -9,7 +9,10 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
-
+from keras.callbacks import EarlyStopping
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from keras.utils import to_categorical
 
 def init_model_sofia_augmented(input_shape=(32, 32, 3)):
 
