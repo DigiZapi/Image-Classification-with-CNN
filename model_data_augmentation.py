@@ -7,7 +7,7 @@ from tensorflow.keras import Input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-def init_matheus(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
+def init_data_augmentation(input_shape=(32, 32, 3)):
     num_classes = 6
 
     model = Sequential(    [
@@ -35,10 +35,10 @@ def init_matheus(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     return model;
 
 def matheus_model(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
-    model = init_matheus(x_train, y_train, x_test, y_test, input_shape)
+    model = init_data_augmentation(input_shape)
     batch_size = 128
     num_classes = 6
-    epochs = 50  # <-- Já aumentado
+    epochs = 50
 
     adam_opt = Adam(learning_rate=0.001)
 
@@ -46,26 +46,23 @@ def matheus_model(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
 
     # 1. Crie o gerador de Data Augmentation
     datagen = ImageDataGenerator(
-        rotation_range=15,       # gira a imagem aleatoriamente em até 15 graus
-        width_shift_range=0.1,   # move a imagem horizontalmente
-        height_shift_range=0.1,  # move a imagem verticalmente
-        shear_range=0.1,         # aplica cisalhamento
-        zoom_range=0.1,          # aplica zoom aleatório
-        horizontal_flip=True,    # inverte a imagem horizontalmente
-        fill_mode='nearest'      # preenche pixels novos da forma mais próxima
+        rotation_range=15,       
+        width_shift_range=0.1,   
+        height_shift_range=0.1,  
+        shear_range=0.1,         
+        zoom_range=0.1,          
+        horizontal_flip=True,    
+        fill_mode='nearest'      
     )
-    
-    # Não precisamos "aumentar" os dados de teste, apenas os de treino
-    # O gerador DEVE ser "fitado" nos dados de treino
+
     datagen.fit(x_train)
 
-    # 2. Mude o model.fit para usar o gerador
     history_m3 = model.fit(
-        datagen.flow(x_train, y_train, batch_size=batch_size), # <-- MUDANÇA AQUI
+        datagen.flow(x_train, y_train, batch_size=batch_size), 
         epochs=epochs,
         validation_data=(x_test, y_test),
         shuffle=True,
-        steps_per_epoch=len(x_train) // batch_size # Necessário ao usar gerador
+        steps_per_epoch=len(x_train) // batch_size 
     )
     
     predictions = model.predict(x_test)
