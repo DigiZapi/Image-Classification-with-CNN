@@ -44,7 +44,7 @@ def init_model_sofia(input_shape=(32, 32, 3), num_classes=6):
 
   return model
 
-def model_sofia(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
+def model_simple_cnn_test_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
 
     model = init_model_sofia(input_shape)
     batch_size = 64

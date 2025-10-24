@@ -33,7 +33,7 @@ def init_model_sofia_augmented(input_shape=(32, 32, 3)):
     return model
 
 
-def model_sofia_augmented(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
+def model_data_augmentation_test_2(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
 
     class_names = ['airplane','automobile','bird','cat','deer',
                'dog','frog','horse','ship','truck']

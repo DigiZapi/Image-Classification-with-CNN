@@ -43,7 +43,7 @@ def init_model_1(input_shape=(32, 32, 3)):
 
   return vgg_model
 
-def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
+def model_simple_cnn_test_2(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     model = init_model_1(input_shape)
     batch_size = 512
     num_classes = 6

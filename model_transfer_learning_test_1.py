@@ -12,7 +12,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping
-def build_model():
+
+def model_transfer_learning_test_1():
     # --- Step 2: Load CIFAR-10 dataset ---
     print("Loading CIFAR-10 dataset...")
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
