@@ -44,7 +44,7 @@ def create_model(num_classes, train_dataset):
     return model
 
 
-def model_v2_build(train_dataset, test_dataset, epochs=4):
+def model_v2_build(train_dataset, test_dataset, epochs=40):
     tf.keras.backend.clear_session()
     torch.cuda.empty_cache()
     gc.collect()
