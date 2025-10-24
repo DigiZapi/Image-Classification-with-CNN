@@ -15,16 +15,17 @@ The main workflow is controlled via Jupyter notebooks, allowing you to train, ev
 - **`main.ipynb`** – Main notebook controlling the workflow. Execute models via specific notebook cells.  
 - **`data_organizer.py`** – Preprocesses and organizes CIFAR-10 data.  
 - **`plot_data.py`** – Visualizes sample images and class distributions.
-- **`model_1.py`** – ???
-- **`model_data_augmentation.py`** – ???
+- **`model_simple_cnn_test_1.py`** – Standard CNN model for CIFAR-10 - test case 1.
+- **`model_simple_cnn_test_2.py`** – Standard CNN model for CIFAR-10 - test case 2.
+- **`model_data_augmentation_test_1.py`** – CNN with data augmentation applied - test case 1.
+- **`model_data_augmentation_test_2.py`** – CNN with data augmentation applied - test case 2.
+- **`model_transfer_learning_test_1.py`** – CNN with Transfer Learning (one-hot encoding, early stopping) applied - test case 1.
 - **`model_tf.py`** – Standard CNN model for CIFAR-10.  
-- **`model_resnet.py`** – CNN using a ResNet backbone.  
-- **`model_sofia_augmented.py`** – CNN with data augmentation applied.
-- **`model_sofia.py`** – Standard CNN model for CIFAR-10.   
-- **`main_sofia.ipynb`** – Notebook focusing on training and evaluating the augmented model.
-- **`model_ahmad.py`** – ???
+- **`model_resnet.py`** – CNN using a ResNet backbone.
 - **`model_ahmad_f1.py`** – ???
+- **`main_sofia.ipynb`** – Notebook focusing on training and evaluating the augmented model.
 - **`todo.txt`** – ???
+- **`POWERPOINT`** – ???
 
 ---
 
