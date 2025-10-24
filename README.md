@@ -1,9 +1,11 @@
 # Image-Classification-with-CNN
 This project performs image classification on the CIFAR-10 dataset using Convolutional Neural Networks (CNNs). It explores different approaches including:
 
-  - VGG16 transfer learning
-  - Data augmentation to improve generalization
-  - Early stopping to prevent overfitting
+  - Simple CNN
+  - Transfer Learning
+  - Data augmentation and Early Stopping
+  - Resnet
+
 
 The main workflow is controlled via Jupyter notebooks, allowing you to train, evaluate, and visualize different models.
 
