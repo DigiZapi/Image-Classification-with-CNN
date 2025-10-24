@@ -12,7 +12,7 @@ from tensorflow.keras.applications import VGG16
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
-def init_model_sofia(input_shape=(32, 32, 3), num_classes=10):
+def init_model_sofia(input_shape=(32, 32, 3), num_classes=6):
   # Builds a CNN model
   model = Sequential()
 
@@ -37,7 +37,7 @@ def init_model_sofia(input_shape=(32, 32, 3), num_classes=10):
   model.add(Dropout(0.5))
 
   # add classification layer (9 classes)
-  model.add(Dense(10, activation='softmax'))
+  model.add(Dense(6, activation='softmax'))
 
   # model summary
   model.summary()
@@ -48,7 +48,7 @@ def model_sofia(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
 
     model = init_model_sofia(input_shape)
     batch_size = 64
-    epochs = 10
+    epochs = 30
     learning_rate = 0.001
 
     adam_opt = Adam(learning_rate=learning_rate)

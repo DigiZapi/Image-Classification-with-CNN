@@ -9,7 +9,10 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
-
+from keras.callbacks import EarlyStopping
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from keras.utils import to_categorical
 
 def init_model_sofia_augmented(input_shape=(32, 32, 3)):
 
@@ -32,6 +35,9 @@ def init_model_sofia_augmented(input_shape=(32, 32, 3)):
 
 def model_sofia_augmented(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
 
+    class_names = ['airplane','automobile','bird','cat','deer',
+               'dog','frog','horse','ship','truck']
+    
     # Normalize images
     x_train = x_train.astype('float32') / 255.0
     x_test = x_test.astype('float32') / 255.0
