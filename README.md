@@ -38,4 +38,23 @@ git clone https://github.com/DigiZapi/Image-Classification-with-CNN.git
 cd Image-Classification-with-CNN
 ```
 
-jhbjh
+## Usage
+
+You can handle everything directly from the `main.ipynb` notebook.  
+Currently, the notebook is set up to run each model in separate code blocks.  
+
+If you want to run an additional model:
+
+1. **Import your model** at the top of the notebook or in a new cell:
+
+```python
+from model_new_model import build_model  # Replace with your model file and function
+```
+2. **Create** a new code block in the notebook.
+
+3. **Run your model** in that code block, e.g.:
+
+```python
+model = build_model(input_shape=(32, 32, 3), num_classes=10)
+model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=64)
+```
