@@ -5,6 +5,13 @@ from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import regularizers
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow import keras
+from print_model_score import print_metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+
+
 
 def residual_block(x, filters):
     shortcut = x
@@ -61,10 +68,51 @@ def model_resnet(x_train, y_train, x_test, y_test):
                                       verbose=1)
 
     # Train the model with learning rate reduction
-    model.fit(x_train, y_train, 
-              epochs=40, 
-              batch_size=256, 
-              validation_data=(x_test, y_test), 
-              callbacks=[lr_reduction])
+    history = model.fit(x_train, y_train, 
+                        epochs=50, 
+                        batch_size=256, 
+                        validation_data=(x_test, y_test), 
+                        callbacks=[lr_reduction])
+                
+
+
+    # Predictions and confusion matrix
+    predictions = model.predict(x_test)
+    predictions = np.argmax(predictions, axis=1)
+    gt = np.argmax(y_test, axis=1)
+
+    #y_test_conv = np.argmax(y_test_conv, axis=1)
+    recall = recall_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
+    f1 = f1_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
+
+    print(f'Recall: {recall:.3f}')
+    print(f'F1 Score: {f1:.3f}')
+    
+    cm = confusion_matrix(gt, predictions)
+    print("Confusion Matrix:\n", cm)
+
+    # Plotting
+    plt.figure(figsize=(10, 6))  # Set figure size
+    plt.subplot(211)
+    plt.title('Cross Entropy Loss')
+    plt.plot(history.history['loss'], color='blue', label='train')
+    plt.plot(history.history['val_loss'], color='red', label='val')
+    plt.legend()
+
+    plt.subplot(212)
+    plt.title('Classification Accuracy')
+    plt.plot(history.history['accuracy'], color='green', label='train')
+    plt.plot(history.history['val_accuracy'], color='red', label='val')
+    plt.legend()
+
+    plt.tight_layout()  # Improve layout
+    plt.show()
+
+    # Evaluate the model on the test dataset
+    test_loss, test_accuracy = model.evaluate(x_test, y_test)
+
+    # Print the test accuracy
+    print(f'Test Accuracy: {test_accuracy:.3f}')
+    print(f'Test Loss: {test_loss:.3f}')   
 
     return model
