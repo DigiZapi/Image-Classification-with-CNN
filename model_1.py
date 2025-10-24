@@ -53,7 +53,7 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     model = init_model_1(input_shape)
     batch_size = 512
     num_classes = 6
-    epochs = 10
+    epochs = 35
 
     adam_opt = Adam(learning_rate=0.001)
 
@@ -83,9 +83,6 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     predictions = np.argmax(predictions, axis=1)
     gt = np.argmax(y_test, axis=1)
 
-    #y_test_conv = np.argmax(y_test_conv, axis=1)
-    recall = recall_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
-    f1 = f1_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
 
     
     cm = confusion_matrix(gt, predictions)
@@ -114,5 +111,3 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     # Print the test accuracy
     print(f'Test Accuracy: {test_accuracy:.3f}')
     print(f'Test Loss: {test_loss:.3f}')
-    print(f'Recall: {recall:.3f}')
-    print(f'F1 Score: {f1:.3f}')

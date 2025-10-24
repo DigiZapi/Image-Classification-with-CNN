@@ -69,7 +69,7 @@ def model_resnet(x_train, y_train, x_test, y_test):
 
     # Train the model with learning rate reduction
     history = model.fit(x_train, y_train, 
-                        epochs=2, 
+                        epochs=50, 
                         batch_size=256, 
                         validation_data=(x_test, y_test), 
                         callbacks=[lr_reduction])

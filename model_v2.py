@@ -10,7 +10,7 @@ import gc
 # Optimized create_model (keeps your name & parameters)
 # ============================================================
 def create_model(num_classes, train_dataset):
-    IMG_SIZE = (64, 64)  # upscale CIFAR10 for better feature extraction
+    IMG_SIZE = (224, 224)  # upscale CIFAR10 for better feature extraction
     IMG_SHAPE = IMG_SIZE + (3,)
 
     base_model = MobileNetV2(input_shape=IMG_SHAPE, include_top=False, weights='imagenet')
@@ -18,8 +18,8 @@ def create_model(num_classes, train_dataset):
 
     data_augmentation = tf.keras.Sequential([
         layers.RandomFlip("horizontal"),
-        layers.RandomRotation(0.1),
-        layers.RandomZoom(0.1)
+        layers.RandomRotation(0.2),
+        layers.RandomZoom(0.2)
     ], name="data_augmentation")
 
     inputs = tf.keras.Input(shape=(IMG_SIZE[0], IMG_SIZE[1], 3))
@@ -30,33 +30,31 @@ def create_model(num_classes, train_dataset):
     x = tf.keras.applications.mobilenet_v2.preprocess_input(x)
     x = base_model(x, training=False)
     x = layers.GlobalAveragePooling2D()(x)
-    x = layers.Dropout(0.3)(x)
+    x = layers.Dropout(0.5)(x)
     outputs = layers.Dense(num_classes, activation='softmax')(x)
 
     model = tf.keras.Model(inputs, outputs)
 
     model.compile(
-        optimizer=Adam(learning_rate=1e-3),
+        optimizer=Adam(learning_rate=1e-4),
         loss='categorical_crossentropy',
         metrics=['accuracy']
     )
 
     return model
 
-# ============================================================
-# Optimized model_v2_build (keeps same name & args)
-# ============================================================
-def model_v2_build(train_dataset, test_dataset, epochs=20):
+
+def model_v2_build(train_dataset, test_dataset, epochs=4):
     tf.keras.backend.clear_session()
     torch.cuda.empty_cache()
     gc.collect()
 
     # Use mixed precision for faster GPU training (if available)
-    tf.keras.mixed_precision.set_global_policy('mixed_float16')
+    #tf.keras.mixed_precision.set_global_policy('mixed_float16')
 
     tf.keras.backend.clear_session()
     
-    model = create_model(10, train_dataset)
+    model = create_model(6, train_dataset)
     model.summary()
 
     # Prefetch to improve input pipeline performance
@@ -77,7 +75,7 @@ def model_v2_build(train_dataset, test_dataset, epochs=20):
     print(f"Initial frozen model — loss: {loss0:.4f}, acc: {accuracy0:.4f}")
 
     # Fine-tuning phase (optional but recommended)
-    print("\n🔧 Fine-tuning top layers of MobileNetV2...")
+    print("Fine-tuning top layers of MobileNetV2...")
     base_model = model.get_layer(index=4)  # your MobileNetV2 is the 5th layer
     base_model.trainable = True
 
