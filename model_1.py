@@ -4,6 +4,12 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropou
 from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import confusion_matrix
 
+from tensorflow import keras
+from print_model_score import print_metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import matplotlib.pyplot as plt
+
+
 def init_model_1(input_shape=(32, 32, 3)):
   # init model
   vgg_model = Sequential()
@@ -47,7 +53,7 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     model = init_model_1(input_shape)
     batch_size = 512
     num_classes = 6
-    epochs = 45
+    epochs = 10
 
     adam_opt = Adam(learning_rate=0.001)
 
@@ -55,7 +61,7 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     model.compile(loss='categorical_crossentropy', optimizer=adam_opt, metrics=['accuracy'])
 
     # train model
-    history_m3 = model.fit(x_train, y_train, 
+    history = model.fit(x_train, y_train, 
                         batch_size=batch_size,
                         epochs=epochs,
                         validation_data=(x_test, y_test))
@@ -69,3 +75,44 @@ def model_1(x_train, y_train, x_test, y_test, input_shape=(32, 32, 3)):
     # print confusion matrix
     gt = np.argmax(y_test, axis=1)
     confusion_matrix(gt, predictions)
+
+
+
+    # Predictions and confusion matrix
+    predictions = model.predict(x_test)
+    predictions = np.argmax(predictions, axis=1)
+    gt = np.argmax(y_test, axis=1)
+
+    #y_test_conv = np.argmax(y_test_conv, axis=1)
+    recall = recall_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
+    f1 = f1_score(gt, predictions, average='weighted')  # Use 'weighted' for multiclass
+
+    
+    cm = confusion_matrix(gt, predictions)
+    print("Confusion Matrix:\n", cm)
+
+    # Plotting
+    plt.figure(figsize=(10, 6))  # Set figure size
+    plt.subplot(211)
+    plt.title('Cross Entropy Loss')
+    plt.plot(history.history['loss'], color='blue', label='train')
+    plt.plot(history.history['val_loss'], color='red', label='val')
+    plt.legend()
+
+    plt.subplot(212)
+    plt.title('Classification Accuracy')
+    plt.plot(history.history['accuracy'], color='green', label='train')
+    plt.plot(history.history['val_accuracy'], color='red', label='val')
+    plt.legend()
+
+    plt.tight_layout()  # Improve layout
+    plt.show()
+
+    # Evaluate the model on the test dataset
+    test_loss, test_accuracy = model.evaluate(x_test, y_test)
+
+    # Print the test accuracy
+    print(f'Test Accuracy: {test_accuracy:.3f}')
+    print(f'Test Loss: {test_loss:.3f}')
+    print(f'Recall: {recall:.3f}')
+    print(f'F1 Score: {f1:.3f}')
