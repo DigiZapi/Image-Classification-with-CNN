@@ -23,9 +23,9 @@ The main workflow is controlled via Jupyter notebooks, allowing you to train, ev
 - **`model_tf.py`** – Standard CNN model for CIFAR-10.  
 - **`model_resnet.py`** – CNN using a ResNet backbone.
 - **`model_ahmad_f1.py`** – ???
-- **`main_sofia.ipynb`** – Notebook focusing on training and evaluating the augmented model.
-- **`todo.txt`** – ???
-- **`POWERPOINT`** – ???
+- **`main_sofia.ipynb`** – Notebook focusing on training and evaluating the augmented model plus the Training Learning
+- **`Presentation - Image Classification With CNN`** – Final Presentation
+- **`Week 3 - Results - Parameters.xlsx`** – Keeping track of our experiments - not all are tracked here
 
 ---
 
